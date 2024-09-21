@@ -1,0 +1,15 @@
+meta {
+  name: Specific User
+  type: http
+  seq: 10
+}
+
+get {
+  url: http://localhost:3000/api/user/:username
+  body: none
+  auth: none
+}
+
+params:path {
+  username: poppop
+}

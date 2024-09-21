@@ -1,0 +1,21 @@
+meta {
+  name: UPDATE Specific Product
+  type: http
+  seq: 6
+}
+
+patch {
+  url: http://localhost:3000/api/products/:productId
+  body: json
+  auth: none
+}
+
+params:path {
+  productId: 66ed1444c02e57488d055c99
+}
+
+body:json {
+  {
+    "variation": "Med"
+  }
+}

@@ -1,0 +1,24 @@
+meta {
+  name: Create New Product
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/products/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "productName": "Unlimited Breathable Lasting Liquid",
+    "variation": "784 Fair Beige",
+    "brand": "Shu Uemura",
+    "category": "Foundation",
+    "productPhoto": "https://www.shuuemura.com.sg/assets/product-images/best-foundation-for-asian-skin-long-lasting-foundation-1625557853-km.jpg",
+    "productLink": "https://www.shuuemura.com.sg/makeup/face/foundation/unlimited-foundation/",
+    "submittedBy": null,
+    "status": "approved"
+  }
+}
