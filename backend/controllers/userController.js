@@ -19,23 +19,18 @@ const createJWT = (user) => {
 
 //sign up user
 const createUser = async (req, res) => {
-  const { name, username, email, passwordHash } = req.body;
+  const userData = req.body;
   try {
     const existingUser = await User.findOne({
-      $or: [{ username }, { email }],
+      $or: [{ username: userData.username }, { email: userData.email }],
     });
     if (existingUser) {
       return res.status(400).json({ error: "This account already exists!" });
     }
 
     // create user if it doesn't exist
-    const hashedPassword = await bcrypt.hash(passwordHash, SALT_LENGTH);
-    const newUser = await User.create({
-      name,
-      username,
-      email,
-      passwordHash: hashedPassword,
-    });
+    const hashedPassword = await bcrypt.hash(userData.passwordHash, SALT_LENGTH);
+    const newUser = await User.create(userData);
     await newUser.save();
     const token = createJWT(newUser);
     res
@@ -87,20 +82,12 @@ const getUserByUsername = async (req, res) => {
     }
 
     const user = await User.findOne({ username });
-    const userData = {
-      name: user.name,
-      username: user.username,
-      postsCreated: user.postsCreated,
-      bookmarks: user.bookmarks,
-      following: user.following,
-      followers: user.followers,
-    };
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    res.status(200).json({ msg: "User found", userData });
+    res.status(200).json({ msg: "User found", user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
