@@ -31,13 +31,6 @@ const createPost = async (req, res) => {
   try {
     const newPost = await Post.create({ ...postData, author: user });
 
-    if (Array.isArray(postData.makeupProduct)) {
-      newPost._doc.makeupProduct = [];
-      for (const productId of postData.makeupProduct) {
-        newPost._doc.makeupProduct.push({ $oid: productId });
-      }
-    }
-
     res.status(200).json(newPost);
   } catch (error) {
     res.status(400).json({ error: error.message });
