@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
+const postRoutes = require("./routes/postRoutes");
 
 const app = express();
 const cors = require("cors");
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use("/api/products", productRoutes);
+app.use("/api/posts", postRoutes);
 app.use("/api/user", userRoutes);
 
 // connect to db
