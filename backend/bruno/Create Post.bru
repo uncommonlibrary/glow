@@ -1,0 +1,23 @@
+meta {
+  name: Create Post
+  type: http
+  seq: 11
+}
+
+post {
+  url: http://localhost:3000/api/posts/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiY2FyIiwidXNlcm5hbWUiOiJjYXJtb24iLCJlbWFpbCI6ImNhcm1vbkBtYWlsLmNvbSIsIl9pZCI6IjY2ZjE4NzY0YmU0NjY3NWUxNzY3YTYwMCIsImlhdCI6MTcyNzEyMzQwMSwiZXhwIjoxNzI3MTM0MjAxfQ.0Aw043t-ortwVT4mVUUUagY_OvF_BF2ZBftdjmtR1_c
+}
+
+body:json {
+  {
+    "textContent": "Hello, this is my first post!",
+    "postPhoto": "https://i.pinimg.com/736x/32/7d/95/327d9588fab569b777c09e5d33a3acbc.jpg",
+    "makeupProduct": ["66ed1401c02e57488d055c97, 66ed1444c02e57488d055c99,66ee755bba66855bb2dbf299"]
+  }
+}

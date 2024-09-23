@@ -7,6 +7,8 @@ const {
   updatePost,
 } = require("../controllers/postController");
 
+const { verifyToken } = require("../middleware/tokenMiddleware");
+
 const router = express.Router();
 
 // GET all posts
@@ -16,7 +18,7 @@ router.get("/", getAllPosts);
 router.get("/:postId", getPost);
 
 // POST new product
-router.post("/", createPost);
+router.post("/", verifyToken, createPost);
 
 // DELETE specific product
 router.delete("/:postId", deletePost);
