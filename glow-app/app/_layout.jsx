@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import { SplashScreen, Stack } from "expo-router";
+import { AuthProvider } from "../context/AuthContext";
 import { useFonts } from "expo-font";
 
 SplashScreen.preventAutoHideAsync();
@@ -27,13 +28,13 @@ const RootLayout = () => {
   if (!fontsLoaded && !error) return null;
 
   return (
+    <AuthProvider>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="(auth)" />
       </Stack>
+    </AuthProvider>
   );
 };
 
 export default RootLayout;
-
-const styles = StyleSheet.create({});
