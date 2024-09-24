@@ -1,3 +1,5 @@
+import { getToken } from "./authService";
+
 // create user
 export async function signupUser(formData) {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/user/signup`;
@@ -49,6 +51,9 @@ export async function getCurrentUser() {
 // show posts from users I follow
 export async function getFollowedPosts() {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/`;
+  const token = await getToken();
+  console.log("token in getFollowedPosts service", token)
+
   try {
     const response = await fetch(url, {
       method: "GET",

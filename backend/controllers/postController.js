@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const getAllPosts = async (req, res) => {
   // console.log("request from user service:", req.user);
   const followedAcc = req.user.following;
-  console.log("followedAcc", req.user.following);
+  // console.log("followedAcc", req.user.following);
 
   const posts = await Post.find({
     $or: [{ author: followedAcc }, { author: req.user._id }],

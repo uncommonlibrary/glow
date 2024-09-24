@@ -23,7 +23,8 @@ const Login = () => {
 
     try {
       const json = await loginUser(formData);
-      const token = json["token"];
+      // console.log("json in submit login", json)
+      const token = json.token;
       await saveToken(token);
 
       router.navigate("/home");

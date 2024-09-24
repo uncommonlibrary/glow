@@ -29,9 +29,12 @@ const createUser = async (req, res) => {
     }
 
     // create user if it doesn't exist
-    const hashedPassword = await bcrypt.hash(userData.passwordHash, SALT_LENGTH);
+    const hashedPassword = await bcrypt.hash(
+      userData.passwordHash,
+      SALT_LENGTH
+    );
     const newUser = await User.create(userData);
-    newUser.passwordHash = hashedPassword
+    newUser.passwordHash = hashedPassword;
     await newUser.save();
     const token = createJWT(newUser);
     res
@@ -45,6 +48,7 @@ const createUser = async (req, res) => {
 //log in user
 const logInUser = async (req, res) => {
   const { username, passwordHash } = req.body;
+  console.log("req body in login user:", req.body);
   try {
     const user = await User.findOne({ username });
     if (user && bcrypt.compare(passwordHash, user.passwordHash)) {
@@ -93,6 +97,5 @@ const getUserByUsername = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 module.exports = { createUser, logInUser, getAllUsers, getUserByUsername };
