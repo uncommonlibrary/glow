@@ -31,6 +31,7 @@ const createUser = async (req, res) => {
     // create user if it doesn't exist
     const hashedPassword = await bcrypt.hash(userData.passwordHash, SALT_LENGTH);
     const newUser = await User.create(userData);
+    newUser.passwordHash = hashedPassword
     await newUser.save();
     const token = createJWT(newUser);
     res
@@ -92,5 +93,6 @@ const getUserByUsername = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 module.exports = { createUser, logInUser, getAllUsers, getUserByUsername };
