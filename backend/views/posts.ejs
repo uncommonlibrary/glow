@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    showw lsits of posts
+    <%=token%>
+    <%=user%>
+    <%for(let i = 0; i < user.following.length; i++) { %>
+        <input value="<%=user.following[i]%>" />
+    <% } %>
+
+    <form action="/admin/deletepost" method="POST">
+        <input name="username"> username:
+        <input name="password"> password:
+        <button>Login</button>
+    </form>
+</body>
+</html>

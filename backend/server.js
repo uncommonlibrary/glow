@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 const cors = require("cors");
@@ -15,7 +16,7 @@ const cors = require("cors");
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
-// app.use(express.json());
+app.use(express.urlencoded());
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
 app.use("/api/products", productRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/user", userRoutes);
+app.use("/admin", adminRoutes);
 
 // connect to db
 mongoose.connect(process.env.MONGODB_URI);
