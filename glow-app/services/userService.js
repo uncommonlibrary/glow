@@ -45,3 +45,25 @@ export async function loginUser(formData) {
 export async function getCurrentUser() {
   // kiv
 }
+
+// show posts from users I follow
+export async function getFollowedPosts() {
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/`;
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    console.log("followed posts", json);
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}

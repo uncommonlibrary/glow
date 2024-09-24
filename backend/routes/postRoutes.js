@@ -12,7 +12,7 @@ const { verifyToken } = require("../middleware/tokenMiddleware");
 const router = express.Router();
 
 // GET all posts
-router.get("/", getAllPosts);
+router.get("/", verifyToken, getAllPosts);
 
 // GET specific product
 router.get("/:postId", getPost);

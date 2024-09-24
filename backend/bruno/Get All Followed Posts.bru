@@ -1,17 +1,17 @@
 meta {
-  name: Create Post
+  name: Get All Followed Posts
   type: http
-  seq: 11
+  seq: 12
 }
 
-post {
+get {
   url: http://localhost:3000/api/posts/
-  body: json
+  body: none
   auth: bearer
 }
 
 auth:bearer {
-  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiY2FyIiwidXNlcm5hbWUiOiJjYXJtb24iLCJlbWFpbCI6ImNhcm1vbkBtYWlsLmNvbSIsIl9pZCI6IjY2ZjE4NzY0YmU0NjY3NWUxNzY3YTYwMCIsImlhdCI6MTcyNzEyMzQwMSwiZXhwIjoxNzI3MTM0MjAxfQ.0Aw043t-ortwVT4mVUUUagY_OvF_BF2ZBftdjmtR1_c
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiY2FyIiwidXNlcm5hbWUiOiJjYXJtb24iLCJlbWFpbCI6ImNhcm1vbkBtYWlsLmNvbSIsIl9pZCI6IjY2ZjE4NzY0YmU0NjY3NWUxNzY3YTYwMCIsImlhdCI6MTcyNzE0MjkyMiwiZXhwIjoxNzI3MTUzNzIyfQ.U_DRyzxxsP3BJOZpGiUfm2dLOgF-rY4awUdqQGooI5g
 }
 
 body:json {
