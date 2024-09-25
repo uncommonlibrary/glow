@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 import SearchInput from "../../components/SearchInput";
 import ProductModal from "../../components/ProductModal";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -16,7 +17,11 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { getProducts, getAddedProducts } from "../../services/userService";
+import {
+  getProducts,
+  getAddedProducts,
+  createPost,
+} from "../../services/userService";
 
 const Create = () => {
   const [formData, setFormData] = useState({
@@ -97,8 +102,14 @@ const Create = () => {
     setIsModalVisible(false);
   };
 
-  const handleSubmitPost = () => {
-    console.log(formData);
+  const handleSubmitPost = async () => {
+    try {
+      // console.log("submitted form Data to create", formData)
+      await createPost(formData);
+      router.navigate("/home");
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
   };
 
   return (
