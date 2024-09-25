@@ -26,7 +26,9 @@ const getPost = async (req, res) => {
     return res.status(404).json({ error: "Invalid id" });
   }
 
-  const post = await Post.findById(postId);
+  const post = await Post.findById(postId)
+    .populate("author")
+    .populate("makeupProduct");
 
   if (!post) {
     return res.status(404).json({ error: "No post found" });

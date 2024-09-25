@@ -122,6 +122,30 @@ export async function getAddedProducts(productIds) {
   }
 }
 
+// Create Post
+export async function createPost (formData) {
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/`;
+  const token = await getToken();
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    console.log("uploaded post", json);
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
 // GET post details
 export async function getPostDetails (postId) {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/${postId}`;

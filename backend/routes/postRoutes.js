@@ -14,16 +14,16 @@ const router = express.Router();
 // GET all posts
 router.get("/", verifyToken, getAllPosts);
 
-// GET specific product
+// GET specific post
 router.get("/:postId", getPost);
 
-// POST new product
+// POST new post
 router.post("/", verifyToken, createPost);
 
-// DELETE specific product
+// DELETE specific post
 router.delete("/:postId", deletePost);
 
-// UPDATE specific product
+// UPDATE specific post
 router.patch("/:postId", updatePost);
 
 module.exports = router;

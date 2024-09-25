@@ -58,7 +58,7 @@ const Home = () => {
             postId={item._id}
             username={item.author.username}
             textContent={item.textContent}
-            avatar={item.avatar}
+            avatar={item.author.avatar}
             postPhoto={item.postPhoto}
             createdAt={item.createdAt}
           />
