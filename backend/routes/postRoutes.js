@@ -14,13 +14,13 @@ const router = express.Router();
 // GET all posts
 router.get("/", verifyToken, getAllPosts);
 
-// GET specific post
+// GET specific product
 router.get("/:postId", getPost);
 
-// POST new post
+// POST new product
 router.post("/", verifyToken, createPost);
 
-// DELETE specific post
+// DELETE specific product
 router.delete("/:postId", deletePost);
 
 // UPDATE specific product

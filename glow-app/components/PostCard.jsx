@@ -1,11 +1,19 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Fontisto from "@expo/vector-icons/Fontisto";
 
-const PostCard = ({ username, textContent, avatar, postPhoto, createdAt }) => {
+const PostCard = ({ postId, username, textContent, avatar, postPhoto, createdAt }) => {
+   const router = useRouter();
+
+   const handlePress = () => {
+    console.log("postId in post card", postId)
+     router.push(`/posts/${postId}`);
+   };
+
   return (
     <View className="flex-col px-4 mt-5 mb-3 bg-highlight h-[50vh] w-[43vh] ml-3 items-center rounded-xl shadow">
       <View className="flex-row gap-3 items-start mt-1">
@@ -45,7 +53,7 @@ const PostCard = ({ username, textContent, avatar, postPhoto, createdAt }) => {
         </View>
       </View>
 
-      <TouchableOpacity activeOpacity={0.7}>
+      <TouchableOpacity activeOpacity={0.7} onPress={handlePress}>
         <View className="justify-center items-center">
           <View className="w-[30vh] h-[30vh] rounded-xl mt-1">
             {postPhoto ? (

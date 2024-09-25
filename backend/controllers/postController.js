@@ -1,7 +1,7 @@
 const Post = require("../models/Post");
 const mongoose = require("mongoose");
 
-// GET all posts that user followed and created
+// GET all posts
 const getAllPosts = async (req, res) => {
   // console.log("request from user service:", req.user);
   const followedAcc = req.user.following;

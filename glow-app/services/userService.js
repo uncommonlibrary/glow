@@ -115,34 +115,32 @@ export async function getAddedProducts(productIds) {
       throw new Error(`Response status: ${response.status}`);
     }
     const json = await response.json();
-    console.log("products in added product service", json);
+    // console.log("products in added product service", json);
     return json;
   } catch (error) {
     console.error("Error fetching products:", error);
   }
 }
 
-// Create Post
-export async function createPost (formData) {
-  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/`;
-  const token = await getToken();
+// GET post details
+export async function getPostDetails (postId) {
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/${postId}`;
 
   try {
     const response = await fetch(url, {
-      method: "POST",
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(formData),
-    });
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-    const json = await response.json();
-    console.log("uploaded post", json);
-    return json;
-  } catch (error) {
-    console.error(error.message);
+        "Content-Type": "application/json"
+      }
+    })
+
+     if (!response.ok) {
+       throw new Error(`Response status: ${response.status}`);
+     }
+     const json = await response.json();
+     console.log("post details service:", json)
+     return json;
+  } catch(error) {
+    console.error("Error getting post details", error)
   }
 }

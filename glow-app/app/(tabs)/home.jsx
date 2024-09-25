@@ -55,6 +55,7 @@ const Home = () => {
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
           <PostCard
+            postId={item._id}
             username={item.author.username}
             textContent={item.textContent}
             avatar={item.avatar}
