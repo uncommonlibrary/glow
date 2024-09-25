@@ -77,7 +77,7 @@ const SignUp = () => {
             handleChangeText={(event) =>
               setFormData({ ...formData, name: event })
             }
-            otherStyles="mt-5"
+            otherStyles="mt-5 shadow"
           />
           <FormField
             title="Username"
@@ -86,7 +86,7 @@ const SignUp = () => {
             handleChangeText={(event) =>
               setFormData({ ...formData, username: event })
             }
-            otherStyles="mt-5"
+            otherStyles="mt-5 shadow"
           />
           <FormField
             title="Email"
@@ -95,7 +95,7 @@ const SignUp = () => {
             handleChangeText={(event) =>
               setFormData({ ...formData, email: event })
             }
-            otherStyles="mt-5"
+            otherStyles="mt-5 shadow"
             keyboardType="email-address"
           />
           <FormField
@@ -105,7 +105,7 @@ const SignUp = () => {
             handleChangeText={(event) =>
               setFormData({ ...formData, passwordHash: event })
             }
-            otherStyles="mt-5"
+            otherStyles="mt-5 shadow"
           />
 
           <FormField
@@ -115,7 +115,7 @@ const SignUp = () => {
             handleChangeText={(event) =>
               setFormData({ ...formData, confirmPw: event })
             }
-            otherStyles="mt-5"
+            otherStyles="mt-5 shadow"
           />
 
           <View className="justify-center items-center pt-5 gap-1">

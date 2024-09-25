@@ -22,9 +22,11 @@ const FormField = ({
       >
         {title}
       </Text>
-      <View className="w-full h-14 px-4 bg-highlight rounded-xl items-center shadow flex-row">
+      <View
+        className={`w-full h-14 px-4 bg-highlight rounded-xl items-center flex-row ${otherStyles}`}
+      >
         <TextInput
-          className="flex-1 text-text  w-full"
+          className="flex-1 text-text w-full"
           style={{ fontFamily: "PlayfairDisplay-Medium" }}
           value={value}
           placeholder={placeholder}

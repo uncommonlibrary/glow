@@ -60,7 +60,7 @@ const Login = () => {
             handleChangeText={(event) =>
               setFormData({ ...formData, username: event })
             }
-            otherStyles="mt-5"
+            otherStyles="mt-5 shadow"
           />
           <FormField
             title="Password"
@@ -69,7 +69,7 @@ const Login = () => {
             handleChangeText={(event) =>
               setFormData({ ...formData, passwordHash: event })
             }
-            otherStyles="mt-5"
+            otherStyles="mt-5 shadow"
           />
 
           <View className="justify-center items-center pt-5 gap-1">

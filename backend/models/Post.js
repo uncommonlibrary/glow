@@ -4,7 +4,7 @@ const postSchema = new mongoose.Schema(
   {
     author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     textContent: { type: String, required: true },
-    postPhoto: { type: String, required: true },
+    postPhoto: { type: String },
     makeupProduct: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   },
   { timestamps: true }
