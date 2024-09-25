@@ -7,9 +7,27 @@ const getAllProducts = async (req, res) => {
   res.status(200).json(products);
 };
 
+// GET searched products
+const getSearchProducts = async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ error: "Query parameter is required" });
+  }
+
+  const products = await Product.find({
+    $or: [
+      { productName: { $regex: q, $options: "i" } },
+      { brand: { $regex: q, $options: "i" } },
+      { category: { $regex: q, $options: "i" } },
+    ],
+  });
+  res.status(200).json(products);
+};
+
 // GET specific product
 const getProduct = async (req, res) => {
-  const { productId } = req.params; 
+  const { productId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(productId)) {
     return res.status(404).json({ error: "Invalid id" });
@@ -75,6 +93,7 @@ const updateProduct = async (req, res) => {
 
 module.exports = {
   getAllProducts,
+  getSearchProducts,
   getProduct,
   createProduct,
   deleteProduct,

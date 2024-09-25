@@ -1,6 +1,7 @@
 import {
   View,
   Text,
+  Image,
   TouchableOpacity,
   ScrollView,
   TextInput,
@@ -13,6 +14,7 @@ import SearchInput from "../../components/SearchInput";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { getProducts } from "../../services/userService";
 
 const Create = () => {
   const [formData, setFormData] = useState({
@@ -46,16 +48,8 @@ const Create = () => {
   };
 
   const handleSearch = async (query) => {
-    const testResults = await fetchFakeData(query);
-    setSearchResults(testResults);
-  };
-
-  const fetchFakeData = async (query) => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return [
-      { id: 1, productName: "The Sun Show", brand: "Kosas" },
-      { id: 2, productName: "Balm Dotcom", brand: "Glossier" },
-    ];
+    const fetchedProducts = await getProducts(query)
+    setSearchResults(fetchedProducts);
   };
 
   return (
@@ -137,6 +131,14 @@ const Create = () => {
                 <ScrollView horizontal>
                   {searchResults.map((product, index) => (
                     <View key={index} className="mr-4">
+                      <Image
+                        source={{ uri: product.productPhoto }}
+                        style={{
+                          width: 100,
+                          height: 100,
+                          resizeMode: "contain",
+                        }}
+                      />
                       <Text className="text-text">{product.productName}</Text>
                       <Text className="text-secondary">{product.brand}</Text>
                     </View>

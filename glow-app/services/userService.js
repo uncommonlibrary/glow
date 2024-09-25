@@ -52,7 +52,7 @@ export async function getCurrentUser() {
 export async function getFollowedPosts() {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/`;
   const token = await getToken();
-  console.log("token in getFollowedPosts service", token)
+  console.log("token in getFollowedPosts service", token);
 
   try {
     const response = await fetch(url, {
@@ -70,5 +70,25 @@ export async function getFollowedPosts() {
     return json;
   } catch (error) {
     console.error(error.message);
+  }
+}
+
+export async function getProducts(query) {
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/products/query?q=${query}`;
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    console.log("products in service", json);
+    return json;
+  } catch (error) {
+    console.error("Error fetching products:", error);
   }
 }
