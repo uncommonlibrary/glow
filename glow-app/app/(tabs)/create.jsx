@@ -6,15 +6,17 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SearchInput from "../../components/SearchInput";
+import ProductModal from "../../components/ProductModal";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 //to add photos
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { getProducts } from "../../services/userService";
+import { getProducts, getAddedProducts } from "../../services/userService";
 
 const Create = () => {
   const [formData, setFormData] = useState({
@@ -23,8 +25,10 @@ const Create = () => {
     makeupProduct: [],
   });
 
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalContent, setModalContent] = useState([]);
 
   const [status, requestPermission] = MediaLibrary.usePermissions();
   if (status === null) {
@@ -48,8 +52,53 @@ const Create = () => {
   };
 
   const handleSearch = async (query) => {
-    const fetchedProducts = await getProducts(query)
-    setSearchResults(fetchedProducts);
+    setIsSearching(true);
+    try {
+      const fetchedProducts = await getProducts(query);
+      setSearchResults(fetchedProducts);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const handleAddProduct = (productId) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      makeupProduct: prevData.makeupProduct.includes(productId)
+        ? prevData.makeupProduct.filter((id) => id !== productId)
+        : [...prevData.makeupProduct, productId],
+    }));
+  };
+
+  useEffect(() => {
+    if (isModalVisible && formData.makeupProduct.length > 0) {
+      const fetchModalContent = async () => {
+        try {
+          const productIds = formData.makeupProduct;
+          // console.log("productIds inside useEffect", productIds)
+          const fetchedProducts = await getAddedProducts(productIds);
+          console.log("fetchedProducts", fetchedProducts);
+          setModalContent(fetchedProducts);
+        } catch (error) {
+          console.error("Error fetching modal content:", error);
+        }
+      };
+      fetchModalContent();
+    }
+  }, [formData, isModalVisible, searchResults]);
+
+  const viewAddedProducts = () => {
+    setIsModalVisible(true);
+  };
+
+  const onModalClose = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleSubmitPost = () => {
+    console.log(formData);
   };
 
   return (
@@ -80,10 +129,10 @@ const Create = () => {
                 New Post
               </Text>
 
-              <TouchableOpacity>
+              <TouchableOpacity onPress={handleSubmitPost}>
                 <View className="bg-primary p-2 rounded-xl">
                   <Text
-                    className="text-highlight"
+                    className="text-highlight text-center"
                     style={{ fontFamily: "PlayfairDisplay-ExtraBold" }}
                   >
                     Post
@@ -93,7 +142,7 @@ const Create = () => {
             </View>
           </View>
 
-          <View className="border w-full h-[25vh]">
+          <View className="w-full h-[25vh]">
             <TextInput
               className="flex-1 text-text"
               style={{ fontFamily: "PlayfairDisplay-Regular" }}
@@ -106,11 +155,15 @@ const Create = () => {
               multiline={true}
               textAlignVertical="top"
             />
-            <TouchableOpacity onPress={pickImageAsync}>
-              <View className="flex-row justify-end items-center pr-2">
+            <View className="flex-row justify-end items-center pr-2">
+              <TouchableOpacity className="mr-5" onPress={viewAddedProducts}>
+                {/* Show modal of products added */}
+                <FontAwesome5 name="list-alt" size={20} color="#C5705D" />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={pickImageAsync}>
                 <FontAwesome name="photo" size={20} color="#C5705D" />
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View className="w-full">
@@ -125,13 +178,20 @@ const Create = () => {
 
             {isSearching ? (
               <Text>Loading search results...</Text>
-            ) : searchResults.length > 0 ? (
+            ) : searchResults === null ? (
+              <></>
+            ) : searchResults.length === 0 ? (
+              <Text>No products found</Text>
+            ) : (
               <View className="mt-4">
-                <Text className="text-secondary">Search Results:</Text>
+                <Text className="text-primary">
+                  Found {searchResults.length} result(s):
+                </Text>
                 <ScrollView horizontal>
-                  {searchResults.map((product, index) => (
-                    <View key={index} className="mr-4">
+                  {searchResults.map((product) => (
+                    <View key={product._id} className="mr-4">
                       <Image
+                        className="rounded-xl self-center"
                         source={{ uri: product.productPhoto }}
                         style={{
                           width: 100,
@@ -139,16 +199,81 @@ const Create = () => {
                           resizeMode: "contain",
                         }}
                       />
-                      <Text className="text-text">{product.productName}</Text>
-                      <Text className="text-secondary">{product.brand}</Text>
+                      <Text className="text-text text-center">
+                        {product.productName}
+                      </Text>
+                      <Text className="text-xs text-text text-center">
+                        {product.variation}
+                      </Text>
+                      <Text className="text-primary text-center">
+                        {product.brand}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => handleAddProduct(product._id)}
+                      >
+                        <View className="bg-primary p-1 mt-1 rounded-xl">
+                          {formData.makeupProduct.includes(product._id) ? (
+                            <Text
+                              className="text-highlight text-center"
+                              style={{
+                                fontFamily: "PlayfairDisplay-ExtraBold",
+                              }}
+                            >
+                              Added
+                            </Text>
+                          ) : (
+                            <Text
+                              className="text-highlight text-center"
+                              style={{
+                                fontFamily: "PlayfairDisplay-ExtraBold",
+                              }}
+                            >
+                              Add
+                            </Text>
+                          )}
+                        </View>
+                      </TouchableOpacity>
                     </View>
                   ))}
                 </ScrollView>
               </View>
-            ) : (
-              <Text>No search results found.</Text>
             )}
           </View>
+        </View>
+        <View className="flex-1 items-center justify-center">
+          <ProductModal isVisible={isModalVisible} onClose={onModalClose}>
+            <ScrollView horizontal>
+              {modalContent.length > 0 ? (
+                modalContent.map((product) => (
+                  <View
+                    key={product.createdAt}
+                    className="h-[30vh] mt-4 ml-4 mr-2 p-4 bg-white rounded-lg shadow-md justify-center"
+                  >
+                    <Image
+                      className="rounded-xl mx-auto mb-2 self-center"
+                      source={{ uri: product.productPhoto }}
+                      style={{
+                        width: 100,
+                        height: 100,
+                        resizeMode: "contain",
+                      }}
+                    />
+                    <Text className="text-text text-center">
+                      {product.productName}
+                    </Text>
+                    <Text className="text-xs text-text text-center">
+                      {product.variation}
+                    </Text>
+                    <Text className="text-primary text-center">
+                      {product.brand}
+                    </Text>
+                  </View>
+                ))
+              ) : (
+                <Text>No products added yet!</Text>
+              )}
+            </ScrollView>
+          </ProductModal>
         </View>
       </ScrollView>
     </SafeAreaView>

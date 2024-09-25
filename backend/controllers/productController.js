@@ -7,6 +7,22 @@ const getAllProducts = async (req, res) => {
   res.status(200).json(products);
 };
 
+// GET added products for modal content
+const getAddedProducts = async (req, res) => {
+  const { q } = req.query;
+  console.log("received query", req.query);
+
+  try {
+    const ids = req.query.q ? req.query.q.split("-") : [];
+    console.log("received ids", ids);
+    const products = await Product.find({ _id: { $in: ids } });
+
+    res.status(200).json(products);
+  } catch (error) {
+    console.error("Error fetching added products:", error);
+  }
+};
+
 // GET searched products
 const getSearchProducts = async (req, res) => {
   const { q } = req.query;
@@ -93,6 +109,7 @@ const updateProduct = async (req, res) => {
 
 module.exports = {
   getAllProducts,
+  getAddedProducts,
   getSearchProducts,
   getProduct,
   createProduct,

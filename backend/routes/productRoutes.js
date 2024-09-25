@@ -6,6 +6,7 @@ const {
   deleteProduct,
   updateProduct,
   getSearchProducts,
+  getAddedProducts,
 } = require("../controllers/productController");
 
 const router = express.Router();
@@ -14,7 +15,10 @@ const router = express.Router();
 router.get("/", getAllProducts);
 
 // GET search products
-router.get("/query", getSearchProducts)
+router.get("/query", getSearchProducts);
+
+// GET added products for Modal
+router.get("/added", getAddedProducts);
 
 // GET specific product
 router.get("/:productId", getProduct);

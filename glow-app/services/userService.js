@@ -52,7 +52,7 @@ export async function getCurrentUser() {
 export async function getFollowedPosts() {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/`;
   const token = await getToken();
-  console.log("token in getFollowedPosts service", token);
+  // console.log("token in getFollowedPosts service", token);
 
   try {
     const response = await fetch(url, {
@@ -66,7 +66,7 @@ export async function getFollowedPosts() {
       throw new Error(`Response status: ${response.status}`);
     }
     const json = await response.json();
-    console.log("followed posts", json);
+    // console.log("followed posts", json);
     return json;
   } catch (error) {
     console.error(error.message);
@@ -86,7 +86,36 @@ export async function getProducts(query) {
       throw new Error(`Response status: ${response.status}`);
     }
     const json = await response.json();
-    console.log("products in service", json);
+    // console.log("products in service", json);
+    return json;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+}
+
+// GET products for modal content
+export async function getAddedProducts(productIds) {
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/products/added`;
+
+  const idString = productIds.join("-"); //need to join all my ids together
+  console.log("idStrings", idString)
+
+  try {
+    const queryString = new URLSearchParams({
+      q: idString,
+    }).toString();
+    const response = await fetch(`${url}?${queryString}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    console.log("products in added product service", json);
     return json;
   } catch (error) {
     console.error("Error fetching products:", error);
