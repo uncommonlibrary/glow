@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import SearchInput from "../../components/SearchInput";
 
 //to add photos
 import * as ImagePicker from "expo-image-picker";
@@ -19,6 +20,9 @@ const Create = () => {
     postPhoto: "",
     makeupProduct: [],
   });
+
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
   const [status, requestPermission] = MediaLibrary.usePermissions();
   if (status === null) {
@@ -39,6 +43,19 @@ const Create = () => {
     } else {
       alert("You did not select any image.");
     }
+  };
+
+  const handleSearch = async (query) => {
+    const testResults = await fetchFakeData(query);
+    setSearchResults(testResults);
+  };
+
+  const fetchFakeData = async (query) => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    return [
+      { id: 1, productName: "The Sun Show", brand: "Kosas" },
+      { id: 2, productName: "Balm Dotcom", brand: "Glossier" },
+    ];
   };
 
   return (
@@ -110,7 +127,25 @@ const Create = () => {
               Product(s) Featured
             </Text>
 
-            <Text>Search bar here</Text>
+            <SearchInput onSearch={handleSearch} />
+
+            {isSearching ? (
+              <Text>Loading search results...</Text>
+            ) : searchResults.length > 0 ? (
+              <View className="mt-4">
+                <Text className="text-secondary">Search Results:</Text>
+                <ScrollView horizontal>
+                  {searchResults.map((product, index) => (
+                    <View key={index} className="mr-4">
+                      <Text className="text-text">{product.productName}</Text>
+                      <Text className="text-secondary">{product.brand}</Text>
+                    </View>
+                  ))}
+                </ScrollView>
+              </View>
+            ) : (
+              <Text>No search results found.</Text>
+            )}
           </View>
         </View>
       </ScrollView>
