@@ -48,14 +48,19 @@ const PostCard = ({ username, textContent, avatar, postPhoto, createdAt }) => {
       <TouchableOpacity activeOpacity={0.7}>
         <View className="justify-center items-center">
           <View className="w-[30vh] h-[30vh] rounded-xl mt-1">
-            <Image
-              source={{
-                uri: postPhoto,
-              }}
-              style={{ width: 250, height: 250 }}
-              className="rounded-xl"
-              resizeMode="cover"
-            />
+            {postPhoto ? (
+              <Image
+                source={{ uri: postPhoto }}
+                style={{ width: 250, height: 250 }}
+                className="rounded-xl"
+                resizeMode="cover"
+              />
+            ) : (
+              <View className="flex justify-center items-center h-[250px]">
+                <Fontisto name="heart-eyes" size={70} color="#342E37" />
+                <Text className="mt-[15]">No Image Available</Text>
+              </View>
+            )}
           </View>
           <View>
             <Text
@@ -74,11 +79,11 @@ const PostCard = ({ username, textContent, avatar, postPhoto, createdAt }) => {
 
       <View className="w-full flex-row justify-between items-center mt-2">
         <TouchableOpacity>
-            <AntDesign name="hearto" size={20} color="#342E37" />
+          <AntDesign name="hearto" size={20} color="#342E37" />
         </TouchableOpacity>
 
         <TouchableOpacity>
-            <FontAwesome6 name="comment" size={20} color="#342E37" />
+          <FontAwesome6 name="comment" size={20} color="#342E37" />
         </TouchableOpacity>
 
         <TouchableOpacity>

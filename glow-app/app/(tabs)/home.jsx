@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, FlatList } from "react-native";
+import { View, Text, ScrollView, FlatList, RefreshControl } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import EmptyState from "../../components/EmptyState";
@@ -7,6 +7,27 @@ import { getFollowedPosts } from "../../services/userService";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchPosts = async () => {
+    try {
+      const followedPosts = await getFollowedPosts();
+      setPosts(followedPosts);
+    } catch (error) {
+      console.error("Error in fetchPost effect", error);
+    }
+  };
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    try {
+      await fetchPosts();
+    } catch (error) {
+      console.error("Error refreshing posts", error);
+    } finally {
+      setRefreshing(false);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -47,6 +68,9 @@ const Home = () => {
             subtitle="Start following people to get started."
           />
         )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </SafeAreaView>
   );

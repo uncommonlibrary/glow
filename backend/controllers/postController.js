@@ -9,7 +9,10 @@ const getAllPosts = async (req, res) => {
 
   const posts = await Post.find({
     $or: [{ author: followedAcc }, { author: req.user._id }],
-  }).populate("author").populate("makeupProduct");
+  })
+    .populate("author")
+    .populate("makeupProduct")
+    .sort({ createdAt: -1 });;
   // console.log("posts retrieved", posts)
 
   res.status(200).json(posts);
