@@ -168,3 +168,28 @@ export async function getPostDetails (postId) {
     console.error("Error getting post details", error)
   }
 }
+
+// user updates post
+export async function updatePost (formData) {
+  const postId = formData._id
+   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/${postId}`;
+   const token = await getToken();
+   try {
+     const response = await fetch(url, {
+       method: "PATCH",
+       headers: {
+         "Content-Type": "application/json",
+         Authorization: `Bearer ${token}`,
+       },
+       body: JSON.stringify(formData),
+     });
+     if (!response.ok) {
+       throw new Error(`Response status: ${response.status}`);
+     }
+     const json = await response.json();
+     console.log("updated post", json);
+     return json;
+   } catch (error) {
+     console.error(error.message);
+   }
+}

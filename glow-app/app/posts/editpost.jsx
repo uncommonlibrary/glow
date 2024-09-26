@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  Alert
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -76,6 +77,10 @@ const EditPost = () => {
   }, [postId]);
 
   const handleSearch = async (query) => {
+    if (!query.trim()) {
+      Alert.alert("Search query required", "Please enter a search query.");
+      return;
+    }
     setIsSearching(true);
     try {
       const fetchedProducts = await getProducts(query);
@@ -122,6 +127,15 @@ const EditPost = () => {
   };
 
   //!handlesubmit EDITED post
+  const handleSubmitEditedPost = async () => {
+    console.log("received form data in handle edit", formData)
+    try {
+        await updatePost(formData);
+        router.navigate("/home");
+    } catch (error) {
+        console.error("Error submitting edited post", error)
+    }
+  }
 
   return (
     <SafeAreaView className="bg-background h-full">
@@ -149,7 +163,7 @@ const EditPost = () => {
               >
                 Edit Post
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={handleSubmitEditedPost}>
                 <View className="bg-primary p-2 rounded-xl">
                   <Text
                     className="text-highlight text-center"
