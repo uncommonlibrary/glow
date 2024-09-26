@@ -34,6 +34,7 @@ const RootLayout = () => {
         <Stack.Screen name="(auth)" />
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="posts" />
+        <Stack.Screen name="editpost" />
       </Stack>
     </AuthProvider>
   );

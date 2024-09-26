@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { getPostDetails } from "../../services/userService";
 import * as Linking from "expo-linking";
 
@@ -23,6 +23,7 @@ const PostDetails = () => {
   const local = useLocalSearchParams();
   const postId = local.postId;
   console.log("post id w use params", postId);
+  const router = useRouter();
 
   const [postDetails, setPostDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -74,6 +75,11 @@ const PostDetails = () => {
     }
   };
 
+  const goToEdit = () => {
+    console.log("postId in view post details", postId);
+    router.push(`/posts/editpost?postId=${postId}`);
+  };
+
   return (
     <SafeAreaView className="bg-background h-full">
       <Text
@@ -118,7 +124,7 @@ const PostDetails = () => {
               </Text>
             </View>
             {currentUser === postDetails.author.username ? (
-              <TouchableOpacity>
+              <TouchableOpacity onPress={goToEdit}>
                 <Text>Edit</Text>
               </TouchableOpacity>
             ) : null}
