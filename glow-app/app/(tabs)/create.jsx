@@ -53,6 +53,10 @@ const Create = () => {
   };
 
   const handleSearch = async (query) => {
+    if (!query.trim()) {
+      Alert.alert("Search query required", "Please enter a search query.");
+      return;
+    }
     setIsSearching(true);
     try {
       const fetchedProducts = await getProducts(query);
