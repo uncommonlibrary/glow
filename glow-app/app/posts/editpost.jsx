@@ -59,7 +59,10 @@ const EditPost = () => {
     const fetchPostDetails = async () => {
       try {
         const fetchedPost = await getPostDetails(postId);
+        // console.log("fetchedPost", fetchedPost)
+        // console.log("makeup product for modal", fetchedPost.makeupProduct)
         setFormData(fetchedPost);
+        setModalContent(fetchedPost.makeupProduct)
       } catch (error) {
         console.error("Error fetching post details:", error);
       }
