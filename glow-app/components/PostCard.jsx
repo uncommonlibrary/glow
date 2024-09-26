@@ -5,14 +5,29 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Fontisto from "@expo/vector-icons/Fontisto";
+import { format } from "date-fns";
 
-const PostCard = ({ postId, username, textContent, avatar, postPhoto, createdAt }) => {
-   const router = useRouter();
+const PostCard = ({
+  postId,
+  username,
+  textContent,
+  avatar,
+  postPhoto,
+  createdAt,
+}) => {
+  const router = useRouter();
 
-   const handlePress = () => {
-    console.log("postId in post card", postId)
-     router.push(`/posts/${postId}`);
-   };
+  const handlePress = () => {
+    console.log("postId in post card", postId);
+    router.push(`/posts/${postId}`);
+  };
+
+  const formattedDate = new Date(createdAt).toLocaleDateString("en-GB", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "long",
+  });
 
   return (
     <View className="flex-col px-4 mt-5 mb-3 bg-highlight h-[50vh] w-[43vh] ml-3 items-center rounded-xl shadow">
@@ -47,7 +62,7 @@ const PostCard = ({ postId, username, textContent, avatar, postPhoto, createdAt 
               numberOfLines={1}
               style={{ fontFamily: "PlayfairDisplay-Regular" }}
             >
-              {createdAt}
+              {formattedDate}
             </Text>
           </View>
         </View>

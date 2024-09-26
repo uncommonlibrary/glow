@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { getPostDetails } from "../../services/userService";
 import * as Linking from "expo-linking";
+import { format } from "date-fns";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -79,6 +80,13 @@ const PostDetails = () => {
     router.push(`/posts/editpost?postId=${postId}`);
   };
 
+  const formattedDate = new Date(postDetails.createdAt).toLocaleDateString("en-GB", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "long",
+  });
+
   return (
     <SafeAreaView className="bg-background h-full">
       <Text
@@ -119,7 +127,7 @@ const PostDetails = () => {
                 numberOfLines={1}
                 style={{ fontFamily: "PlayfairDisplay-Regular" }}
               >
-                {postDetails.createdAt}
+                {formattedDate}
               </Text>
             </View>
             {currentUser === postDetails.author.username ? (
