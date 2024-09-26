@@ -180,7 +180,7 @@ export async function getPostDetails (postId) {
        throw new Error(`Response status: ${response.status}`);
      }
      const json = await response.json();
-     console.log("post details service:", json)
+    //  console.log("post details service:", json)
      return json;
   } catch(error) {
     console.error("Error getting post details", error)

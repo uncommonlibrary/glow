@@ -67,9 +67,11 @@ const EditPost = () => {
     const fetchPostDetails = async () => {
       try {
         const fetchedPost = await getPostDetails(postId);
-        // console.log("fetchedPost", fetchedPost)
-        // console.log("makeup product for modal", fetchedPost.makeupProduct)
-        setFormData(fetchedPost);
+        console.log("fetchedPost details", fetchedPost)
+        const productIds = fetchedPost.makeupProduct.map(
+          (product) => product._id
+        );
+        setFormData({...fetchedPost, makeupProduct: productIds});
         setModalContent(fetchedPost.makeupProduct);
       } catch (error) {
         console.error("Error fetching post details:", error);
@@ -95,6 +97,7 @@ const EditPost = () => {
   };
 
   const handleAddProduct = (productId) => {
+    console.log("Product id in create handle add", productId);
     setFormData((prevData) => ({
       ...prevData,
       makeupProduct: prevData.makeupProduct.includes(productId)
@@ -105,20 +108,22 @@ const EditPost = () => {
 
   useEffect(() => {
     if (isModalVisible && formData.makeupProduct.length > 0) {
+      console.log("Fetching modal content", formData.makeupProduct);
       const fetchModalContent = async () => {
         try {
-          const productIds = formData.makeupProduct;
-          // console.log("productIds inside useEffect", productIds)
-          const fetchedProducts = await getAddedProducts(productIds);
-          console.log("fetchedProducts", fetchedProducts);
+          console.log("productIds inside useEffect", formData.makeupProduct)
+          const fetchedProducts = await getAddedProducts(formData.makeupProduct);
+          // console.log("fetchedProducts in edit post useeffect", fetchedProducts);
           setModalContent(fetchedProducts);
         } catch (error) {
           console.error("Error fetching modal content:", error);
         }
       };
       fetchModalContent();
+    } else if (isModalVisible && formData.makeupProduct.length === 0) {
+      setModalContent([]);
     }
-  }, [formData, isModalVisible, searchResults]);
+  }, [formData.makeupProduct, isModalVisible]);
 
   const viewAddedProducts = () => {
     setIsModalVisible(true);
@@ -280,7 +285,7 @@ const EditPost = () => {
                                 fontFamily: "PlayfairDisplay-ExtraBold",
                               }}
                             >
-                              Added
+                              Remove
                             </Text>
                           ) : (
                             <Text

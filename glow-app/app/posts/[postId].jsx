@@ -16,13 +16,12 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Fontisto from "@expo/vector-icons/Fontisto";
-import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import { fetchedUser } from "../../services/authService";
 
 const PostDetails = () => {
   const local = useLocalSearchParams();
   const postId = local.postId;
-  console.log("post id w use params", postId);
+  // console.log("post id w use params", postId);
   const router = useRouter();
 
   const [postDetails, setPostDetails] = useState(null);
@@ -38,7 +37,7 @@ const PostDetails = () => {
       try {
         const currentUser = await fetchedUser();
         const currentUsername = currentUser.username;
-        console.log("username retrieved", currentUsername);
+        // console.log("username retrieved", currentUsername);
         setCurrentUser(currentUsername);
       } catch (error) {
         console.error("Error in checkCurrentUser:", error);
@@ -88,7 +87,7 @@ const PostDetails = () => {
       >
         Glow
       </Text>
-      <View className="flex-col px-4 mt-5 mb-3 bg-highlight h-[70vh] w-[43vh] ml-3 items-center rounded-xl shadow">
+      <View className="flex-col px-4 mt-5 mb-3 bg-highlight h-[77vh] w-[43vh] ml-3 items-center rounded-xl shadow">
         <View className="flex-row gap-3 items-start mt-1">
           <View className="justify-center items-center flex-row flex-1">
             <View className="w-[46px] h-[46px] rounded-full border-primary border justify-center items-center">
@@ -216,19 +215,20 @@ const PostDetails = () => {
             )}
           </View>
         </View>
+        <View className="absolute bottom-4 right-4 left-4">
+          <View className="w-full flex-row justify-between items-center mt-2">
+            <TouchableOpacity>
+              <AntDesign name="hearto" size={20} color="#342E37" />
+            </TouchableOpacity>
 
-        <View className="w-full flex-row justify-between items-center mt-2">
-          <TouchableOpacity>
-            <AntDesign name="hearto" size={20} color="#342E37" />
-          </TouchableOpacity>
+            <TouchableOpacity>
+              <FontAwesome6 name="comment" size={20} color="#342E37" />
+            </TouchableOpacity>
 
-          <TouchableOpacity>
-            <FontAwesome6 name="comment" size={20} color="#342E37" />
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <Fontisto name="bookmark" size={20} color="#342E37" />
-          </TouchableOpacity>
+            <TouchableOpacity>
+              <Fontisto name="bookmark" size={20} color="#342E37" />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </SafeAreaView>
