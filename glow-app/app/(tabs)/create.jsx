@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  Alert
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -115,6 +116,12 @@ const Create = () => {
       // console.log("submitted form Data to create", formData)
       await createPost(formData);
       router.navigate("/home");
+      setFormData({
+        textContent: "",
+        postPhoto: "",
+        makeupProduct: [],
+      });
+      setSearchResults(null)
     } catch (error) {
       console.error("Error creating post:", error);
     }
