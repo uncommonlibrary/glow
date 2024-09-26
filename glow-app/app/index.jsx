@@ -42,7 +42,7 @@ export default function App() {
           </View>
           <CustomButton
             title="Get Started"
-            handlePress={() => router.navigate("/login")}
+            handlePress={() => router.replace("/login")}
             containerStyles="w-60 mt-7"
             textStyles="text-highlight text-xl"
           />

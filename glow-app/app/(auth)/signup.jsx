@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import { Link, router } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { signupUser } from "../../services/userService";
 import { saveToken } from "../../services/authService";
 
 const SignUp = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -41,7 +42,7 @@ const SignUp = () => {
         await saveToken(token);
 
         // Navigate to home screen
-        router.navigate("/home");
+        router.replace("/home");
       } else {
         console.error("Response does not contain token");
         Alert.alert("Error", "Failed to obtain token");
