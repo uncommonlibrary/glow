@@ -43,11 +43,6 @@ export async function loginUser(formData) {
   }
 }
 
-// get current user
-export async function getCurrentUser() {
-  // kiv
-}
-
 // show posts from users I follow
 export async function getFollowedPosts() {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/`;
@@ -72,6 +67,29 @@ export async function getFollowedPosts() {
     console.error(error.message);
   }
 }
+
+// export async function getUserPosts () {
+//   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/`;
+//   const token = await getToken();
+
+//   try {
+//     const response = await fetch(url, {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     if (!response.ok) {
+//       throw new Error(`Response status: ${response.status}`);
+//     }
+//     const json = await response.json();
+//     // console.log("authored posts", json);
+//     return json;
+//   } catch (error) {
+//     console.error(error.message);
+//   }
+// }
 
 export async function getProducts(query) {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/products/query?q=${query}`;

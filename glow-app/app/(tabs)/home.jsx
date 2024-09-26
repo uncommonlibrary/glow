@@ -18,6 +18,10 @@ const Home = () => {
     }
   };
 
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
     try {
@@ -27,19 +31,6 @@ const Home = () => {
     } finally {
       setRefreshing(false);
     }
-  }, []);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const followedPosts = await getFollowedPosts();
-        setPosts(followedPosts);
-      } catch (error) {
-        console.error("Error in fetchPost effect", error);
-      }
-    };
-
-    fetchPosts();
   }, []);
 
   return (
