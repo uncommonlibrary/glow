@@ -17,7 +17,12 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { getPostDetails, getProducts, getAddedProducts, updatePost } from "../../services/userService";
+import {
+  getPostDetails,
+  getProducts,
+  getAddedProducts,
+  updatePost,
+} from "../../services/userService";
 
 const EditPost = () => {
   const router = useRouter();
@@ -62,7 +67,7 @@ const EditPost = () => {
         // console.log("fetchedPost", fetchedPost)
         // console.log("makeup product for modal", fetchedPost.makeupProduct)
         setFormData(fetchedPost);
-        setModalContent(fetchedPost.makeupProduct)
+        setModalContent(fetchedPost.makeupProduct);
       } catch (error) {
         console.error("Error fetching post details:", error);
       }

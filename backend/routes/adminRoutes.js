@@ -1,7 +1,7 @@
 const express = require("express");
 
 const {
-  logInUser,
+  logInUser, deletePost
 } = require("../controllers/adminController");
 
 const { verifyToken } = require("../middleware/tokenMiddleware");
@@ -11,13 +11,8 @@ const router = express.Router();
 // log in user
 router.post("/login", logInUser);
 
-router.post("/deletepost", (req, res) => {
-    //code
-    res.render("success.ejs")
-})
-
-// get all users
-// router.get("/all", getAllUsers);
+// admin deletes post
+router.post("/deletepost", deletePost)
 
 // get all users
 router.get("/", (req, res) => {

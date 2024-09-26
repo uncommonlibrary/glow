@@ -3,20 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Glow Admin</title>
 </head>
 <body>
-    showw lsits of posts
-    <%=token%>
-    <%=user%>
-    <%for(let i = 0; i < user.following.length; i++) { %>
-        <input value="<%=user.following[i]%>" />
-    <% } %>
+    <h1>List of Posts Created</h1>
+    <p>Total posts: <%=posts.length%>
+    </p>
+    
+<% if (posts.length> 0) { %>
+    <% for (let i=0; i < posts.length; i++) { %>
+        <div class="post">
+            <h3>Post ID: <%= posts[i]._id %>
+            </h3>
+            <p>Text Content: <%= posts[i].textContent %>
+            </p>
+            <p>Author: <%= posts[i].author.username %>
+            </p>
+            <p>Email: <%= posts[i].author.email %>
+            </p>
+            <form action="/admin/deletepost" method="POST">
+                <input type="hidden" name="_id" value="<%= posts[i]._id %>">
+                <button>Delete</button>
+            </form>
+        </div>
+        <% } %>
+            <% } else { %>
+                <p>No posts found.</p>
+                <% } %>
 
-    <form action="/admin/deletepost" method="POST">
-        <input name="username"> username:
-        <input name="password"> password:
-        <button>Login</button>
-    </form>
 </body>
 </html>

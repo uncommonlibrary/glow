@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Post = require("../models/Post")
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -26,7 +27,10 @@ const logInUser = async (req, res) => {
     if (user && bcrypt.compare(password, user.passwordHash)) {
       const token = createJWT(user);
     //   res.status(200).json({ user, token });
-    res.render("posts.ejs", {token, user}) //can pass antyhiing
+    const posts = await Post.find({})
+      .populate("author")
+      .sort({ createdAt: -1 });
+    res.render("posts.ejs", {token, user, posts}) //can pass antyhiing
     } else {
       res.status(401).json({ error: "Invalid username or password" });
     }
@@ -35,4 +39,16 @@ const logInUser = async (req, res) => {
   }
 };
 
-module.exports = { logInUser };
+// delete selected post
+const deletePost = async (req, res) => {
+   try {
+     const postId = req.body._id;
+     await Post.findByIdAndDelete(postId);
+     res.render("success.ejs");
+   } catch (error) {
+     console.error(error);
+     res.status(500).send("Error deleting post");
+   }
+}
+
+module.exports = { logInUser, deletePost };
