@@ -193,3 +193,27 @@ export async function updatePost (formData) {
      console.error(error.message);
    }
 }
+
+// user deletes post
+export async function deletePost (formData) {
+  const postId = formData._id;
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/${postId}`;
+  const token = await getToken();
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    console.log("deleted post", json);
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}

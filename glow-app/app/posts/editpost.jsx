@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  Alert
+  Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,6 +13,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import SearchInput from "../../components/SearchInput";
 import ProductModal from "../../components/ProductModal";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import CustomButton from "../../components/CustomButton";
 
 //to add photos
 import * as ImagePicker from "expo-image-picker";
@@ -128,14 +129,29 @@ const EditPost = () => {
 
   //!handlesubmit EDITED post
   const handleSubmitEditedPost = async () => {
-    console.log("received form data in handle edit", formData)
+    console.log("received form data in handle edit", formData);
     try {
-        await updatePost(formData);
-        router.navigate("/home");
+      await updatePost(formData);
+      router.navigate("/home");
     } catch (error) {
-        console.error("Error submitting edited post", error)
+      console.error("Error submitting edited post", error);
     }
-  }
+  };
+
+  const handleDeletePost = async () => {
+    Alert.alert(
+      "Confirm delete?",
+      "Are you sure you want to delete this post?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("cancel"),
+          style: "cancel",
+        },
+        { text: "Delete", onPress: () => console.log("deleted") },
+      ]
+    );
+  };
 
   return (
     <SafeAreaView className="bg-background h-full">
@@ -307,6 +323,12 @@ const EditPost = () => {
               )}
             </ScrollView>
           </ProductModal>
+          <CustomButton
+            title="Delete Post"
+            handlePress={handleDeletePost}
+            containerStyles="w-60 mt-7 mb-2"
+            textStyles="text-highlight text-xl"
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
