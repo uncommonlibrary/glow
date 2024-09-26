@@ -195,8 +195,7 @@ export async function updatePost (formData) {
 }
 
 // user deletes post
-export async function deletePost (formData) {
-  const postId = formData._id;
+export async function deletePost (postId) {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/posts/${postId}`;
   const token = await getToken();
   try {

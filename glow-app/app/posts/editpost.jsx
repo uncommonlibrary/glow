@@ -24,6 +24,7 @@ import {
   getProducts,
   getAddedProducts,
   updatePost,
+  deletePost,
 } from "../../services/userService";
 
 const EditPost = () => {
@@ -148,7 +149,18 @@ const EditPost = () => {
           onPress: () => console.log("cancel"),
           style: "cancel",
         },
-        { text: "Delete", onPress: () => console.log("deleted") },
+        {
+          text: "Delete",
+          onPress: async () => {
+            try {
+              await deletePost(postId);
+              router.navigate("/home");
+            } catch (error) {
+              console.error("Error deleting post:", error);
+              Alert.alert("Error", "Failed to delete post. Please try again.");
+            }
+          },
+        },
       ]
     );
   };
