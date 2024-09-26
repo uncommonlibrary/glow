@@ -67,11 +67,11 @@ const EditPost = () => {
     const fetchPostDetails = async () => {
       try {
         const fetchedPost = await getPostDetails(postId);
-        console.log("fetchedPost details", fetchedPost)
+        console.log("fetchedPost details", fetchedPost);
         const productIds = fetchedPost.makeupProduct.map(
           (product) => product._id
         );
-        setFormData({...fetchedPost, makeupProduct: productIds});
+        setFormData({ ...fetchedPost, makeupProduct: productIds });
         setModalContent(fetchedPost.makeupProduct);
       } catch (error) {
         console.error("Error fetching post details:", error);
@@ -111,8 +111,10 @@ const EditPost = () => {
       console.log("Fetching modal content", formData.makeupProduct);
       const fetchModalContent = async () => {
         try {
-          console.log("productIds inside useEffect", formData.makeupProduct)
-          const fetchedProducts = await getAddedProducts(formData.makeupProduct);
+          console.log("productIds inside useEffect", formData.makeupProduct);
+          const fetchedProducts = await getAddedProducts(
+            formData.makeupProduct
+          );
           // console.log("fetchedProducts in edit post useeffect", fetchedProducts);
           setModalContent(fetchedProducts);
         } catch (error) {
@@ -133,7 +135,7 @@ const EditPost = () => {
     setIsModalVisible(false);
   };
 
-  //!handlesubmit EDITED post
+  // handlesubmit EDITED post
   const handleSubmitEditedPost = async () => {
     console.log("received form data in handle edit", formData);
     try {
@@ -170,6 +172,10 @@ const EditPost = () => {
     );
   };
 
+  const cancelEdit = () => {
+    router.back(`/posts/${postId}`);
+  };
+
   return (
     <SafeAreaView className="bg-background h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
@@ -182,7 +188,7 @@ const EditPost = () => {
         <View className="flex-col px-4 mt-5 mb-3 bg-highlight h-[70vh] w-[43vh] ml-3 items-center rounded-xl shadow">
           <View className="flex-row gap-3 items-start mt-1">
             <View className="justify-between items-center flex-row flex-1">
-              <TouchableOpacity>
+              <TouchableOpacity onPress={cancelEdit}>
                 <Text
                   className="text-primary"
                   style={{ fontFamily: "PlayfairDisplay-ExtraBold" }}

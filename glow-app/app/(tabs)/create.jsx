@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  Alert
+  Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -121,10 +121,35 @@ const Create = () => {
         postPhoto: "",
         makeupProduct: [],
       });
-      setSearchResults(null)
+      setSearchResults(null);
     } catch (error) {
       console.error("Error creating post:", error);
     }
+  };
+
+  const cancelPost = () => {
+    Alert.alert(
+      "Delete draft?",
+      "Are you sure you want to cancel this draft?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("cancel"),
+          style: "cancel"
+        },
+        {
+          text: "Delete Draft",
+          onPress: () => {
+            setFormData({
+              textContent: "",
+              postPhoto: "",
+              makeupProduct: [],
+            });
+            setSearchResults(null);
+          }
+        },
+      ]
+    );
   };
 
   return (
@@ -139,7 +164,7 @@ const Create = () => {
         <View className="flex-col px-4 mt-5 mb-3 bg-highlight h-[70vh] w-[43vh] ml-3 items-center rounded-xl shadow">
           <View className="flex-row gap-3 items-start mt-1">
             <View className="justify-between items-center flex-row flex-1">
-              <TouchableOpacity>
+              <TouchableOpacity onPress={cancelPost}>
                 <Text
                   className="text-primary"
                   style={{ fontFamily: "PlayfairDisplay-ExtraBold" }}
