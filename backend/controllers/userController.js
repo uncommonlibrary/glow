@@ -98,4 +98,10 @@ const getUserByUsername = async (req, res) => {
   }
 };
 
-module.exports = { createUser, logInUser, getAllUsers, getUserByUsername };
+// GET current user
+const getCurrentUser = async (req, res) => {
+  const response = {success: true, username: req.user.username}
+  res.status(200).json(response);
+}
+
+module.exports = { createUser, logInUser, getAllUsers, getUserByUsername, getCurrentUser };

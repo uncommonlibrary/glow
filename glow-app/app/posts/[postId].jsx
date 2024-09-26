@@ -1,4 +1,11 @@
-import { View, Text, ScrollView, Image, TouchableOpacity, TouchableNativeFeedback } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
@@ -9,6 +16,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Fontisto from "@expo/vector-icons/Fontisto";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import { fetchedUser } from "../../services/authService";
 
 const PostDetails = () => {
   const local = useLocalSearchParams();
@@ -17,10 +26,25 @@ const PostDetails = () => {
 
   const [postDetails, setPostDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     fetchPostDetails(postId);
   }, [postId]);
+
+  useEffect(() => {
+    const checkCurrentUser = async () => {
+      try {
+        const currentUser = await fetchedUser();
+        const currentUsername = currentUser.username;
+        console.log("username retrieved", currentUsername);
+        setCurrentUser(currentUsername);
+      } catch (error) {
+        console.error("Error in checkCurrentUser:", error);
+      }
+    };
+    checkCurrentUser();
+  }, []);
 
   const fetchPostDetails = async () => {
     try {
@@ -44,11 +68,11 @@ const PostDetails = () => {
 
   const handleOpenLink = async (url) => {
     try {
-      await Linking.openURL(url)
+      await Linking.openURL(url);
     } catch (error) {
-      console.error("Error opening product link:", error)
+      console.error("Error opening product link:", error);
     }
-  }
+  };
 
   return (
     <SafeAreaView className="bg-background h-full">
@@ -93,6 +117,11 @@ const PostDetails = () => {
                 {postDetails.createdAt}
               </Text>
             </View>
+            {currentUser === postDetails.author.username ? (
+              <TouchableOpacity>
+                <Text>Edit</Text>
+              </TouchableOpacity>
+            ) : null}
           </View>
         </View>
 
@@ -134,47 +163,50 @@ const PostDetails = () => {
             Product(s) Featured
           </Text>
           <View>
-            {!postDetails?.makeupProduct || postDetails.makeupProduct.length === 0 ? (
-              <Text className="text-center text-text mt-4">Nothing to feature!</Text>
+            {!postDetails?.makeupProduct ||
+            postDetails.makeupProduct.length === 0 ? (
+              <Text className="text-center text-text mt-4">
+                Nothing to feature!
+              </Text>
             ) : (
-            <ScrollView horizontal>
-              {postDetails.makeupProduct.map((product, index) => (
-                <View key={index}>
-                  <Image
-                    className="rounded-xl self-center"
-                    source={{ uri: product.productPhoto }}
-                    style={{
-                      width: 100,
-                      height: 100,
-                      resizeMode: "contain",
-                    }}
-                  />
-                  <Text className="text-text text-center">
-                    {product.productName}
-                  </Text>
-                  <Text className="text-xs text-text text-center">
-                    {product.variation}
-                  </Text>
-                  <Text className="text-primary text-center">
-                    {product.brand}
-                  </Text>
-                  <TouchableNativeFeedback
-                    onPress={() => handleOpenLink(product.productLink)}
-                  >
-                    <View className="bg-primary p-1 mt-1 rounded-xl">
-                      <Text
-                        className="text-highlight text-center"
-                        style={{
-                          fontFamily: "PlayfairDisplay-ExtraBold",
-                        }}
-                      >
-                        View
-                      </Text>
-                    </View>
-                  </TouchableNativeFeedback>
-                </View>
-              ))}
-            </ScrollView>
+              <ScrollView horizontal>
+                {postDetails.makeupProduct.map((product, index) => (
+                  <View key={index}>
+                    <Image
+                      className="rounded-xl self-center"
+                      source={{ uri: product.productPhoto }}
+                      style={{
+                        width: 100,
+                        height: 100,
+                        resizeMode: "contain",
+                      }}
+                    />
+                    <Text className="text-text text-center">
+                      {product.productName}
+                    </Text>
+                    <Text className="text-xs text-text text-center">
+                      {product.variation}
+                    </Text>
+                    <Text className="text-primary text-center">
+                      {product.brand}
+                    </Text>
+                    <TouchableNativeFeedback
+                      onPress={() => handleOpenLink(product.productLink)}
+                    >
+                      <View className="bg-primary p-1 mt-1 rounded-xl">
+                        <Text
+                          className="text-highlight text-center"
+                          style={{
+                            fontFamily: "PlayfairDisplay-ExtraBold",
+                          }}
+                        >
+                          View
+                        </Text>
+                      </View>
+                    </TouchableNativeFeedback>
+                  </View>
+                ))}
+              </ScrollView>
             )}
           </View>
         </View>

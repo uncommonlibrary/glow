@@ -21,9 +21,9 @@ router.get("/:postId", getPost);
 router.post("/", verifyToken, createPost);
 
 // DELETE specific post
-router.delete("/:postId", deletePost);
+router.delete("/:postId", verifyToken, deletePost);
 
 // UPDATE specific post
-router.patch("/:postId", updatePost);
+router.patch("/:postId", verifyToken, updatePost);
 
 module.exports = router;

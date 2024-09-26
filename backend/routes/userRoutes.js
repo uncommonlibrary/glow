@@ -5,6 +5,7 @@ const {
   logInUser,
   getAllUsers,
   getUserByUsername,
+  getCurrentUser
 } = require("../controllers/userController");
 
 const { verifyToken } = require("../middleware/tokenMiddleware");
@@ -21,7 +22,7 @@ router.post("/login", logInUser);
 router.get("/all", getAllUsers);
 
 // testing token
-router.get("/test", verifyToken, (req, res) => res.json("test"));
+router.get("/", verifyToken, getCurrentUser);
 
 // get user by username
 router.get("/:username", getUserByUsername);

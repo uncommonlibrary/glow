@@ -20,3 +20,25 @@ export const getToken = async () => {
     return null;
   }
 };
+
+// get username from token
+export const fetchedUser = async () => {
+   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/user/`
+   const token = await getToken();
+   try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    return json
+  } catch (error) {
+    console.error("Error fetching username:", error)
+  }
+}
