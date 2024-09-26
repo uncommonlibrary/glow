@@ -17,7 +17,11 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { getProducts, getAddedProducts, createPost } from "../../services/userService";
+import {
+  getProducts,
+  getAddedProducts,
+  createPost,
+} from "../../services/userService";
 
 const Create = () => {
   const [formData, setFormData] = useState({
@@ -69,6 +73,7 @@ const Create = () => {
   };
 
   const handleAddProduct = (productId) => {
+    // console.log("Product id in create handle add", productId);
     setFormData((prevData) => ({
       ...prevData,
       makeupProduct: prevData.makeupProduct.includes(productId)
@@ -79,20 +84,23 @@ const Create = () => {
 
   useEffect(() => {
     if (isModalVisible && formData.makeupProduct.length > 0) {
+      console.log("Fetching modal content", formData.makeupProduct);
       const fetchModalContent = async () => {
         try {
           const productIds = formData.makeupProduct;
           // console.log("productIds inside useEffect", productIds)
           const fetchedProducts = await getAddedProducts(productIds);
-          console.log("fetchedProducts", fetchedProducts);
+          // console.log("fetchedProducts in useeffect", fetchedProducts);
           setModalContent(fetchedProducts);
         } catch (error) {
           console.error("Error fetching modal content:", error);
         }
       };
       fetchModalContent();
+    } else if (isModalVisible && formData.makeupProduct.length === 0) {
+      setModalContent([]);
     }
-  }, [formData, isModalVisible, searchResults]);
+  }, [formData.makeupProduct, isModalVisible]);
 
   const viewAddedProducts = () => {
     setIsModalVisible(true);
@@ -230,7 +238,7 @@ const Create = () => {
                                 fontFamily: "PlayfairDisplay-ExtraBold",
                               }}
                             >
-                              Added
+                              Remove
                             </Text>
                           ) : (
                             <Text
