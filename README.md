@@ -26,22 +26,35 @@ This project was created in fulfillment of the final coding bootcamp project to 
 
 ## Screenshots
 *Main Screen*  
-<img src="./glow-app/assets/images/glow_main.PNG" alt="Screenshot of main screen" width="300"/>
+<p align="center">
+  <img src="./glow-app/assets/images/glow_main.PNG" alt="Screenshot of main screen" width="200"/>
+</p>
 
 *Login Screen*  
-<img src="./glow-app/assets/images/glow_login.PNG" alt="Screenshot of login screen" width="300"/>
+<p align="center">
+  <img src="./glow-app/assets/images/glow_login.PNG" alt="Screenshot of login screen" width="200"/>
+</p>
 
 *Home Feed*  
-<img src="./glow-app/assets/images/glow_homefeed.PNG" alt="Screenshot of home feed" width="300"/>
+<p style="text-align: center;">
+  <img src="./glow-app/assets/images/glow_homefeed.PNG" alt="Screenshot of home feed" width="200"/>
+</p>
 
 *View Post*  
-<img src="./glow-app/assets/images/glow_viewpost.PNG" alt="Screenshot of view post" width="300"/>
+<p style="text-align: center;">
+  <img src="./glow-app/assets/images/glow_viewpost.PNG" alt="Screenshot of view post" width="200"/>
+</p>
 
 *Edit Post*  
-<img src="./glow-app/assets/images/glow_editpost.PNG" alt="Screenshot of edit post" width="300"/>
+<p style="text-align: center;">
+  <img src="./glow-app/assets/images/glow_editpost.PNG" alt="Screenshot of edit post" width="200"/>
+</p>
 
 *Create Post*  
-<img src="./glow-app/assets/images/glow_newpost.PNG" alt="Screenshot of create post" width="300"/>
+<p style="text-align: center;">
+  <img src="./glow-app/assets/images/glow_newpost.PNG" alt="Screenshot of create post" width="200"/>
+</p>
+
 
 ## Next Steps
 
