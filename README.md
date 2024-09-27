@@ -25,23 +25,23 @@ This project was created in fulfillment of the final coding bootcamp project to 
 * Node.js
 
 ## Screenshots
-*Main Screen*
-![Screenshot of main screen](./glow-app/assets/images/glow_main.PNG)
+*Main Screen*  
+<img src="./glow-app/assets/images/glow_main.PNG" alt="Screenshot of main screen" width="300"/>
 
-*Login Screen*
-![Screenshot of login screen](./glow-app/assets/images/glow_login.PNG)
+*Login Screen*  
+<img src="./glow-app/assets/images/glow_login.PNG" alt="Screenshot of login screen" width="300"/>
 
-*Home Feed*
-![Screenshot of home feed](./glow-app/assets/images/glow_homefeed.PNG)
+*Home Feed*  
+<img src="./glow-app/assets/images/glow_homefeed.PNG" alt="Screenshot of home feed" width="300"/>
 
-*View Post*
-![Screenshot of view post](./glow-app/assets/images/glow_viewpost.PNG)
+*View Post*  
+<img src="./glow-app/assets/images/glow_viewpost.PNG" alt="Screenshot of view post" width="300"/>
 
-*Edit Post*
-![Screenshot of edit post](./glow-app/assets/images/glow_editpost.PNG)
+*Edit Post*  
+<img src="./glow-app/assets/images/glow_editpost.PNG" alt="Screenshot of edit post" width="300"/>
 
-*Create Post*
-![Screenshot of create post](./glow-app/assets/images/glow_newpost.PNG)
+*Create Post*  
+<img src="./glow-app/assets/images/glow_newpost.PNG" alt="Screenshot of create post" width="300"/>
 
 ## Next Steps
 
